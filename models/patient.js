@@ -78,9 +78,11 @@ Patient.validatePatient = function(Patient) {
       .required(),
     telephone: Joi.string()
       .min(8)
-      .max(8)
-      .required(),
-    age: Joi.number.min(0).max(200),
+      .max(8),
+    age: Joi.number()
+      .integer()
+      .min(0)
+      .max(200),
     adresse: Joi.string().max(1024),
     assuranceMedicale: Joi.string().max(1024)
   };
