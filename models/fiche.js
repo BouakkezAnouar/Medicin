@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+require("./consultation");
 
 const ficheSchema = new mongoose.Schema({
   patient: {
@@ -7,13 +8,19 @@ const ficheSchema = new mongoose.Schema({
     required: true,
     ref: "Patient"
   },
+  consultations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Consultation",
+      required: true
+    }
+  ],
   allegries: [String],
   chroniques: [String],
   allegriesMedicaments: [String],
   medicinsAnterieurs: [String],
   contactUrgence: mongoose.Schema.Types.Mixed,
   dateCreation: { type: Date, default: Date.now() }
-  // on doit ajouter le consultation
 });
 
 const Fiche = mongoose.model("Fiche", ficheSchema);
@@ -78,6 +85,7 @@ Fiche.deleteFiche = async function(id) {
 Fiche.getFiches = async function() {
   return await Fiche.find()
     .populate("patient")
+    .populate("consultations")
     .sort({ _id: -1 });
 };
 /*   creation d'un fiche
