@@ -28,6 +28,8 @@ Consultation.createConsultation = async function(
   });
 
   await consultation.save();
+  fiche = await Fiche.findById(fiche);
+  fiche.consultations.push(consultation._id);
   return consultation;
 };
 
