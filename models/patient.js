@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+require("./fiche");
 
 const patientSchema = new mongoose.Schema({
+  fiche: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Fiche"
+  },
   nom: { type: String, required: true, minlength: 3, maxlength: 255 },
   prenom: { type: String, required: true, minlength: 3, maxlength: 255 },
   age: String,
@@ -63,7 +68,9 @@ Patient.deletePatient = async function(id) {
 };
 
 Patient.getPatients = async function() {
-  return await Patient.find().sort({ _id: -1 });
+  return await Patient.find()
+    .populate("fiche")
+    .sort({ _id: -1 });
 };
 
 Patient.validatePatient = function(Patient) {

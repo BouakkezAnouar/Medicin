@@ -12,3 +12,4 @@ app.use(express.json());
 
 //routes
 app.use("/patient", require("./routes/patient"));
+app.use("/fiche", require("./routes/fiche"));

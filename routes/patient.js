@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Patient = require("../models/patient");
+const Fiche = require("../models/fiche");
 
 router.get("/", async (req, res) => {
   const patients = await Patient.getPatients();
@@ -45,7 +46,11 @@ router.delete("/", async (req, res) => {
   patient = await Patient.findById(id);
   if (!patient) return res.status(401).send("patient not found!");
 
+  //delete fiche related with the patient
+  const ficheId = patient.fiche;
   patient = await Patient.deletePatient(id);
+  await Fiche.deleteFiche(ficheId);
+
   res.status(200).send(patient);
 });
 
