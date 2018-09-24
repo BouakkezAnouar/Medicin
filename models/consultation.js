@@ -20,6 +20,8 @@ Consultation.createConsultation = async function(
   fiche,
   { ordonnances, description, prix }
 ) {
+  const isFiche = await Fiche.findById(fiche);
+  if (!isFiche) return "fiche not found !";
   const consultation = new Consultation({
     fiche,
     ordonnances,
@@ -39,7 +41,7 @@ Consultation.modifyConsultation = async function(
   prix
 ) {
   let consultation = await Consultation.findById(id);
-  if (!consultation) return undefined;
+  if (!consultation) return "consultation not found";
 
   consultation.description = description;
   consultation.prix = prix;
@@ -49,8 +51,14 @@ Consultation.modifyConsultation = async function(
   return result;
 };
 
-Consultation.deleteConsultation = async function(id) {
-  return await Consultation.findByIdAndRemove(id);
+Consultation.deleteConsultation = async function(id, idFiche) {
+  // remove consultation from Consultation
+  const consultation = await Consultation.findByIdAndRemove(id);
+  if (!consultation) return "consultation not found!";
+  //remove consultation from Fiche
+  let fiche = await Fiche.findById(idFiche);
+  if (!fiche) return "fiche not found!";
+  fiche.consultations = fiche.consultations.filter(el => el !== idFiche);
 };
 
 Consultation.getConsultations = async function() {
@@ -59,7 +67,7 @@ Consultation.getConsultations = async function() {
 
 Consultation.addOrdonnance = async function(idConsultation, ordonnance) {
   let consultation = await Consultation.findById(idConsultation);
-  if (!consultation) return undefined;
+  if (!consultation) return "consultation not found!";
 
   consultation.ordonnances.push(ordonnance);
 
@@ -86,7 +94,7 @@ Consultation.modifyOrdonnance = async function(
   newValue
 ) {
   let consultation = await Consultation.findById(idConsultation);
-  if (!consultation) return undefined;
+  if (!consultation) return "consultation not found";
 
   consultation.ordonnances[indexOrdonnance] = newValue;
 
