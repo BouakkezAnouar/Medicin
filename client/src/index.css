@@ -1,66 +1,48 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
+
 body {
   background-color: #acc6cc;
+  background: linear-gradient(180deg , #d3d8e2,#84b3c9,rgb(91, 120, 122)) ;
   font-family: tahoma;
+  
+
 }
-#SearchBtn {
+.btn {
   border-radius: 20px;
+  background-color: rgb(42, 99, 99);
 }
 
-#search-field {
+input {
   background-color: white;
   height: 30px;
   border-radius: 20px;
   border: 1px solid grey;
 }
 
-.footer-dark {
-  padding: 50px 0;
-  color: #f0f9ff;
-  background-color: #7ca4a4;
-}
+
 #siteName {
-  color: #03a4e8;
+  color: rgb(42, 99, 99);
   font-weight: bold;
 }
-.row-striped:nth-of-type(odd) {
-  background-color: #efefef;
-  border-left: 10px #cd3333 solid;
-}
 
-.row-striped:nth-of-type(even) {
-  background-color: #ffffff;
-  border-left: 15px #efefef solid;
-}
-
-.row-striped {
-  padding: 15px 0;
-  margin-top: 15px;
-}
-
-.date-green {
-  background-color: #cd3333;
-}
-
-.badge-grey {
-  background-color: #efefef;
-}
 i{
   color: #243131;
 }
 footer {
+border-top: 10px #acc6cc solid;
   background-image: url(https://image.freepik.com/free-photo/authentication-standing-physician-stylish-icons_1134-904.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  
+}
+.footer{
+  background-color: #8db1b1;
+  opacity:0.5;
 }
 .footer-dark {
+
   padding: 50px 0;
-  color: #f0f9ff;
-  background-color: #7ca4a4;
-  opacity: 0.5;
+  color: #ffffff;
+
 }
 
 .footer-dark h3 {
