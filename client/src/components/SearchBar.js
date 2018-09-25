@@ -18,17 +18,6 @@ class SearchBar extends React.Component {
                 </div>
               </div>
               <div className="col-md-3 col-md-4">
-                <div className="form-group">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <input
-                    type="search"
-                    name="search"
-                    id="search-field"
-                    className="search-field"
-                  />
-                </div>
-              </div>
-              <div className="col-md-3 col-md-4">
                 <button
                   className="btn btn-primary"
                   type="button"
