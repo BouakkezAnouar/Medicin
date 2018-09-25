@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/Navbar.css"
 function NavBar() {
 
     return (
@@ -40,9 +41,10 @@ function NavBar() {
                             </li>
                         </ul>
                     </div>
+                    <button className="btn btn-danger"><i class="fas fa-user" style={{ color: '#fff' }}> </i>Se Connecter</button>
                 </div>
             </nav>
-        </div>
+        </div >
     );
 }
 
