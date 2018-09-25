@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../css/Navbar.css"
 function NavBar() {
   return (
     <div id="NavBar">
@@ -40,6 +41,7 @@ function NavBar() {
               </li>
             </ul>
           </div>
+          <button className="btn btn-danger"><i class="fas fa-user" style={{ color: '#fff' }}> </i>Se Connecter</button>
         </div>
       </nav>
     </div>
