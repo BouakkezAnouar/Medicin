@@ -15,10 +15,10 @@ const ficheSchema = new mongoose.Schema({
       required: true
     }
   ],
-  allegries: [String],
-  chroniques: [String],
-  allegriesMedicaments: [String],
-  medicinsAnterieurs: [String],
+  allegries: { type: String, default: "" },
+  chroniques: { type: String, default: "" },
+  allegriesMedicaments: { type: String, default: "" },
+  medicinsAnterieurs: { type: String, default: "" },
   contactUrgence: mongoose.Schema.Types.Mixed,
   dateCreation: { type: Date, default: Date.now() }
 });
@@ -47,7 +47,7 @@ Fiche.createFiche = async function(
   await fiche.save();
   return fiche;
 };
-
+/*
 Fiche.addAllegrie = async function(id, allegrie) {
   let fiche = await Fiche.findById(id);
   if (!fiche) return;
@@ -76,7 +76,7 @@ Fiche.modifyAllegrie = async function(idFiche, indexAllegrie, newValue) {
 
   const result = await fiche.save();
   return result;
-};
+};*/
 
 Fiche.deleteFiche = async function(id) {
   return await Fiche.findByIdAndRemove(id);
