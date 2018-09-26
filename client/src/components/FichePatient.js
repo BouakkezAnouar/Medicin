@@ -1,14 +1,13 @@
 import React from "react";
 import "../css/FichePatient.css";
 function FichePatient(props) {
-  // const patient = props.patients.filter(el => el._id == props.match.params.id);
-  const patient = props.patients[0];
-  let fiche = patient.fiche;
+  const patient = props.patients.filter(
+    el => el._id == props.match.params.id
+  )[0];
+  let fiche;
+  if (patient && patient.fiche) fiche = patient.fiche;
   let contactUrgence;
   if (fiche && fiche.contactUrgence) contactUrgence = fiche.contactUrgence;
-
-  //const contactUrgence = fiche.contactUrgence;
-  //console.log(contactUrgence.nom);
   if (!patient) return <div>id not found</div>;
   return (
     <div className="container">
@@ -71,19 +70,27 @@ function FichePatient(props) {
             <label>Histoirique médicale :</label>
             <tr>
               <th scope="row">Allergies</th>
-              <td>{patient.Allergies}</td>
+              <td>{fiche && fiche.allegries ? fiche.allegries : ""}</td>
             </tr>
             <tr>
               <th scope="row">Maladies chroniques</th>
-              <td>{patient.maladies_chr}</td>
+              <td>{fiche && fiche.chroniques ? fiche.chroniques : ""}</td>
             </tr>
             <tr>
               <th scope="row">Allergies aux médicaments</th>
-              <td>{patient.Allergies_medica}</td>
+              <td>
+                {fiche && fiche.allegriesMedicaments
+                  ? fiche.allegriesMedicaments
+                  : ""}
+              </td>
             </tr>
             <tr>
               <th scope="row">médecins anterieurs</th>
-              <td>{patient.medecins_anter}</td>
+              <td>
+                {fiche && fiche.medicinsAnterieurs
+                  ? fiche.medicinsAnterieurs
+                  : ""}
+              </td>
             </tr>
           </tbody>
         </table>
