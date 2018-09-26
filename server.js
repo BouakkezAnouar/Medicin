@@ -14,3 +14,5 @@ app.use(express.json());
 app.use("/patient", require("./routes/patient"));
 app.use("/fiche", require("./routes/fiche"));
 app.use("/consultation", require("./routes/consultation"));
+
+console.log(process.env.dbuser);

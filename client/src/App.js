@@ -8,6 +8,7 @@ import Consultation from "./components/Consultations";
 import AddConsultation from "./components/AddConsultation";
 import ListePatient from "./components/ListePatient";
 import { Switch, Route } from "react-router-dom";
+import axios from "axios";
 import "./css/App.css";
 const NoMatch = () => {
   return <h1>404 not found</h1>;
@@ -76,6 +77,17 @@ class App extends Component {
     );
   };
 
+  showFiche = idFiche => {
+    console.log("show fiche de id egale " + idFiche);
+  };
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:7000/patient")
+      .then(res => this.setState({ patients: res.data }))
+      .catch(err => console.log(err.message));
+  }
+
   render() {
     return (
       <div className="App">
@@ -89,6 +101,7 @@ class App extends Component {
               <ListePatient
                 patients={this.getFiltredPatients()}
                 onChange={this.handleChangeSearch.bind(this)}
+                showFiche={this.showFiche}
               />
             )}
           />
@@ -100,6 +113,12 @@ class App extends Component {
                 fiche={this.state.fiche}
               />
             )}
+          />
+          <Route
+            path="/fiche/:id"
+            render={props => {
+              return <FichePatient {...props} patients={this.state.patients} />;
+            }}
           />
           <Route component={NoMatch} />
         </Switch>

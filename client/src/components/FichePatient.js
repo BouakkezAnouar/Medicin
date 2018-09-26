@@ -1,66 +1,89 @@
 import React from "react";
-import "../css/FichePatient.css"
+import "../css/FichePatient.css";
 function FichePatient(props) {
-  props = props.fiche;
+  // const patient = props.patients.filter(el => el._id == props.match.params.id);
+  const patient = props.patients[0];
+  let fiche = patient.fiche;
+  let contactUrgence;
+  if (fiche && fiche.contactUrgence) contactUrgence = fiche.contactUrgence;
+
+  //const contactUrgence = fiche.contactUrgence;
+  //console.log(contactUrgence.nom);
+  if (!patient) return <div>id not found</div>;
   return (
     <div className="container">
       <div className="container-fiche">
         <h2 className="text-center">
-          <strong>Fiche Patient :</strong><span className="text-uppercase"> {props.patient}</span>
+          <strong>Fiche Patient :</strong>
+          <span className="text-uppercase">
+            {patient.nom + " " + patient.prenom}
+          </span>
         </h2>
         <table className="table table-hover">
           <thead />
           <tbody>
             <tr>
               <th scope="row">Nom & Prénom de patient</th>
-              <td>{props.nom}</td>
+              <td>{patient.nom}</td>
             </tr>
 
             <tr>
               <th scope="row">Telephone</th>
-              <td>{props.tel}</td>
+              <td>{patient.telephone}</td>
             </tr>
             <tr>
-              <th scope="row">Date de naissance</th>
-              <td>{props.birth}</td>
+              <th scope="row">Age</th>
+              <td>{patient.age}</td>
             </tr>
             <tr>
               <th scope="row">Num assurance médicale</th>
-              <td>{props.Num_ass_med}</td>
+              <td>{patient.assuranceMedicale}</td>
             </tr>
             <tr>
               <th scope="row">Adresse</th>
-              <td>{props.address}</td>
+              <td>{patient.adresse}</td>
             </tr>
             <label>Contact d'urgence :</label>
             <tr>
               <th scope="row">Nom & Prénom de contact</th>
-              <td>{props.nom_contact}</td>
+              <td>
+                {contactUrgence && contactUrgence.nom && contactUrgence.prenom
+                  ? contactUrgence.nom + " " + contactUrgence.prenom
+                  : ""}
+              </td>
             </tr>
             <tr>
               <th scope="row">Lien de parenté</th>
-              <td>{props.lien}</td>
+              <td>
+                {contactUrgence && contactUrgence.lienParente
+                  ? contactUrgence.lienParente
+                  : ""}
+              </td>
             </tr>
             <tr>
               <th scope="row">Telephone</th>
-              <td>{props.tel_contact}</td>
+              <td>
+                {contactUrgence && contactUrgence.telephone
+                  ? contactUrgence.telephone
+                  : ""}
+              </td>
             </tr>
             <label>Histoirique médicale :</label>
             <tr>
               <th scope="row">Allergies</th>
-              <td>{props.Allergies}</td>
+              <td>{patient.Allergies}</td>
             </tr>
             <tr>
               <th scope="row">Maladies chroniques</th>
-              <td>{props.maladies_chr}</td>
+              <td>{patient.maladies_chr}</td>
             </tr>
             <tr>
               <th scope="row">Allergies aux médicaments</th>
-              <td>{props.Allergies_medica}</td>
+              <td>{patient.Allergies_medica}</td>
             </tr>
             <tr>
               <th scope="row">médecins anterieurs</th>
-              <td>{props.medecins_anter}</td>
+              <td>{patient.medecins_anter}</td>
             </tr>
           </tbody>
         </table>
