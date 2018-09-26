@@ -78,7 +78,7 @@ class App extends Component {
   };
 
   showFiche = idFiche => {
-    console.log("show fiche de id egale " + idFiche);
+    document.location.href = `http://localhost:3000/fiche/${idFiche}`;
   };
 
   componentDidMount() {
