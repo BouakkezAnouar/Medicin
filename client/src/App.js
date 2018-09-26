@@ -80,7 +80,9 @@ class App extends Component {
   showFiche = idFiche => {
     document.location.href = `http://localhost:3000/fiche/${idFiche}`;
   };
-
+  createFiche = () => {
+    document.location.href = `http://localhost:3000/CreateFiche`;
+  };
   componentDidMount() {
     axios
       .get("http://localhost:7000/patient")
@@ -102,6 +104,7 @@ class App extends Component {
                 patients={this.getFiltredPatients()}
                 onChange={this.handleChangeSearch.bind(this)}
                 showFiche={this.showFiche}
+                createFiche={this.createFiche}
               />
             )}
           />
@@ -114,12 +117,27 @@ class App extends Component {
               />
             )}
           />
+
           <Route
             path="/fiche/:id"
             render={props => {
               return <FichePatient {...props} patients={this.state.patients} />;
             }}
           />
+          <Route
+            path="/createFiche"
+            render={props => {
+              return (
+                <CreateFichePatient
+                  {...props}
+                  onChange={this.handleChange.bind(this)}
+                  onClick={this.handleClick.bind(this)}
+                  //createFiche={this.createFiche}
+                />
+              );
+            }}
+          />
+
           <Route component={NoMatch} />
         </Switch>
 

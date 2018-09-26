@@ -21,12 +21,13 @@ class ListePatient extends Component {
   redirect = i => {
     console.log("clicked", i);
   };
+
   render() {
     return (
       <div className="container">
         <div className="container">
           <button className="btn btn-secondary">
-            <h1>+</h1>
+            <h1 onClick={this.props.createFiche}>+</h1>
           </button>
           <div className="col-md-3 col-md-4">
             <div className="form-group">
