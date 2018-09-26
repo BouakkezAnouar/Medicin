@@ -4,23 +4,15 @@ function CreateFichePatient(props) {
     <div>
       <div className="container">
         <div className="container-fiche">
-          <div >
+          <div>
             <h2 className="text-center">
               <strong>Fiche Patient :</strong>
             </h2>
-            <div className="form-group">
-              <input
-                type="date"
-                name="date"
-                placeholder="date"
-                className="form-control"
-                onChange={props.onChange}
-              />
-            </div>
+
             <div className="form-group">
               <input
                 type="name"
-                name="patient"
+                name="nomPrenom"
                 placeholder="Nom & Prénom de patient"
                 className="form-control"
                 onChange={props.onChange}
@@ -28,16 +20,17 @@ function CreateFichePatient(props) {
             </div>
             <div className="form-group">
               <input
-                type="date"
-                name="birth"
+                type="text"
+                name="age"
+                placeholder="Age"
                 className="form-control"
                 onChange={props.onChange}
               />
             </div>
             <div className="form-group">
               <input
-                type="number"
-                name="Num_ass_med"
+                type="text"
+                name="assuranceMedicale"
                 placeholder="Numéro assurance médicale"
                 className="form-control"
                 onChange={props.onChange}
@@ -45,8 +38,8 @@ function CreateFichePatient(props) {
             </div>
             <div className="form-group">
               <input
-                type="address"
-                name="address"
+                type="text"
+                name="adresse"
                 placeholder="Adresse"
                 className="form-control"
                 onChange={props.onChange}
@@ -55,7 +48,7 @@ function CreateFichePatient(props) {
             <div className="form-group">
               <input
                 type="text"
-                name="tel"
+                name="telephone"
                 placeholder="Telephone"
                 className="form-control"
                 onChange={props.onChange}
@@ -64,15 +57,20 @@ function CreateFichePatient(props) {
             <label>Contact d'urgence :</label>
             <div className="form-group">
               <input
-                type="name"
-                name="nom_contact"
+                type="text"
+                name="contact_nomPrenom"
                 placeholder="Nom & Prénom de contact"
                 className="form-control"
                 onChange={props.onChange}
               />
             </div>
             <div className="form-group">
-              <select name="lien" id="inputState" className="form-control" onChange={props.onChange}>
+              <select
+                name="contact_lienParente"
+                id="inputState"
+                className="form-control"
+                onChange={props.onChange}
+              >
                 <option selected>Lien de parenté ...</option>
                 <option>père</option>
                 <option>mère</option>
@@ -84,13 +82,12 @@ function CreateFichePatient(props) {
                 <option>cousin</option>
                 <option>oncle</option>
                 <option>époux(se)</option>
-
               </select>
             </div>
             <div className="form-group">
               <input
                 type="text"
-                name="tel_contact"
+                name="contact_telephone"
                 placeholder="Telephone"
                 className="form-control"
                 onChange={props.onChange}
@@ -99,7 +96,7 @@ function CreateFichePatient(props) {
             <label>Histoire médicale :</label>
             <div className="form-group">
               <textarea
-                name="Allergies"
+                name="allegries"
                 placeholder="Allergies"
                 className="form-control"
                 onChange={props.onChange}
@@ -107,7 +104,7 @@ function CreateFichePatient(props) {
             </div>
             <div className="form-group">
               <textarea
-                name="maladies_chr"
+                name="chroniques"
                 placeholder="Maladies chroniques"
                 className="form-control"
                 onChange={props.onChange}
@@ -115,7 +112,7 @@ function CreateFichePatient(props) {
             </div>
             <div className="form-group">
               <textarea
-                name="Allergies_medica"
+                name="allegriesMedicaments"
                 placeholder="Allergies aux médicaments"
                 className="form-control"
                 onChange={props.onChange}
@@ -124,7 +121,7 @@ function CreateFichePatient(props) {
             <div className="form-group">
               <input
                 type="text"
-                name="medecins_anter"
+                name="medicinsAnterieurs"
                 placeholder="medecins anterieurs"
                 className="form-control"
                 onChange={props.onChange}
@@ -132,7 +129,11 @@ function CreateFichePatient(props) {
             </div>
 
             <div className="form-group">
-              <button className="btn btn-primary btn-block" type="submit" onClick={props.onClick}>
+              <button
+                className="btn btn-primary btn-block"
+                type="submit"
+                onClick={props.CreateFichePatient}
+              >
                 Ajouter le patient
               </button>
             </div>

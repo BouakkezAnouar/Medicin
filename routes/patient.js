@@ -9,12 +9,11 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = Patient.validatePatient(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  //const { error } = Patient.validatePatient(req.body);
+  //if (error) return res.status(400).send(error.details[0].message);
 
   const patient = await Patient.createPatient(
-    req.body.nom,
-    req.body.prenom,
+    req.body.nomPrenom,
     req.body.age,
     req.body.telephone,
     req.body.adresse,
@@ -28,8 +27,7 @@ router.put("/", async (req, res) => {
   const patient = await Patient.findById(id);
   if (!patient) return res.status(401).send("patient not found!");
 
-  if (req.body.nom) patient.nom = req.body.nom;
-  if (req.body.prenom) patient.prenom = req.body.prenom;
+  if (req.body.nomPrenom) patient.nomPrenom = req.body.nomPrenom;
   if (req.body.age) patient.age = req.body.age;
   if (req.body.telephone) patient.telephone = req.body.telephone;
   if (req.body.adresse) patient.adresse = req.body.adresse;

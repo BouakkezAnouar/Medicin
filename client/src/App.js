@@ -17,19 +17,17 @@ const NoMatch = () => {
 const PatientTest = [
   {
     _id: 1,
-    nom: "bouakkez",
-    prenom: "anouer",
+    nomPrenom: "bouakkez anouar",
     age: "23",
     telephone: "54222222"
   },
   {
     _id: 2,
-    nom: "kouraichi",
-    prenom: "achraf",
+    nomPrenom: "kouraichi achref",
     age: "22",
     telephone: "54888888"
   },
-  { _id: 3, nom: "ezzi", prenom: "med", age: "27", telephone: "54222222" }
+  { _id: 3, nomPrenom: "ezzi mohamed", age: "27", telephone: "54222222" }
 ];
 class App extends Component {
   constructor(props) {
@@ -37,23 +35,23 @@ class App extends Component {
     {
       this.state = {
         fiche: {
-          date: "",
-          patient: "",
-          tel: "",
-          birth: "",
-          Num_ass_med: "",
-          address: "",
-          nom_contact: "",
-          Lien: "",
-          tel_contact: "",
-          Allergies: "",
-          maladies_chr: "",
-          Allergies_medica: "",
-          medecins_anter: ""
+          allegries: "",
+          medicinsAnterieurs: "",
+          chroniques: "",
+          allegriesMedicaments: "",
+          contact_nomPrenom: "",
+          contact_lienParente: "",
+          contact_telephone: "",
+          nomPrenom: "",
+          telephone: "",
+          age: "",
+          assuranceMedicale: "",
+          adresse: ""
         },
         patients: PatientTest,
         filter: ""
       };
+      this.CreateFichePatient = this.CreateFichePatient.bind(this);
     }
   }
   handleChange(e) {
@@ -68,12 +66,11 @@ class App extends Component {
   }
   handleChangeSearch = event => {
     this.setState({ filter: event.target.value });
-    //console.log("filter", this.state.filter)
   };
 
   getFiltredPatients = () => {
     return this.state.patients.filter(patient =>
-      patient.nom.toLowerCase().includes(this.state.filter.toLowerCase())
+      patient.nomPrenom.toLowerCase().includes(this.state.filter.toLowerCase())
     );
   };
 
@@ -83,6 +80,50 @@ class App extends Component {
   createFiche = () => {
     document.location.href = `http://localhost:3000/CreateFiche`;
   };
+
+  async CreateFichePatient() {
+    const nomPrenom = this.state.fiche.nomPrenom;
+    const age = this.state.fiche.age;
+    const telephone = this.state.fiche.telephone;
+    const assuranceMedicale = this.state.fiche.assuranceMedicale;
+    const adresse = this.state.fiche.adresse;
+    const res = await axios.post("http://localhost:7000/patient", {
+      nomPrenom,
+      age,
+      telephone,
+      assuranceMedicale,
+      adresse
+    });
+    const patient = res.data;
+    if (!patient) return;
+    const idPatient = patient._id;
+
+    const allegries = this.state.fiche.allegries;
+    const chroniques = this.state.fiche.chroniques;
+    const allegriesMedicaments = this.state.fiche.allegriesMedicaments;
+    const medicinsAnterieurs = this.state.fiche.medicinsAnterieurs;
+    const contact_nomPrenom = this.state.fiche.contact_nomPrenom;
+    const contact_telephone = this.state.fiche.contact_telephone;
+    const contact_lienParente = this.state.fiche.contact_lienParente;
+
+    const fiche = await axios.post("http://localhost:7000/fiche", {
+      patient: idPatient,
+      allegries,
+      chroniques,
+      allegriesMedicaments,
+      medicinsAnterieurs,
+      contact_lienParente,
+      contact_nomPrenom,
+      contact_telephone
+    });
+
+    let patients = await axios.get("http://localhost:7000/patient");
+    patients = patients.data;
+
+    this.setState({ patients });
+
+    console.log(patient);
+  }
   componentDidMount() {
     axios
       .get("http://localhost:7000/patient")
@@ -94,7 +135,6 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-
         <Switch>
           <Route
             path="/"
@@ -132,7 +172,7 @@ class App extends Component {
                   {...props}
                   onChange={this.handleChange.bind(this)}
                   onClick={this.handleClick.bind(this)}
-                  //createFiche={this.createFiche}
+                  CreateFichePatient={this.CreateFichePatient}
                 />
               );
             }}

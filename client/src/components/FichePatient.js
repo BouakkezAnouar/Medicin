@@ -14,16 +14,14 @@ function FichePatient(props) {
       <div className="container-fiche">
         <h2 className="text-center">
           <strong>Fiche Patient :</strong>
-          <span className="text-uppercase">
-            {patient.nom + " " + patient.prenom}
-          </span>
+          <span className="text-uppercase">{patient.nomPrenom}</span>
         </h2>
         <table className="table table-hover">
           <thead />
           <tbody>
             <tr>
               <th scope="row">Nom & Prénom de patient</th>
-              <td>{patient.nom}</td>
+              <td>{patient.nomPrenom}</td>
             </tr>
 
             <tr>
@@ -46,24 +44,24 @@ function FichePatient(props) {
             <tr>
               <th scope="row">Nom & Prénom de contact</th>
               <td>
-                {contactUrgence && contactUrgence.nom && contactUrgence.prenom
-                  ? contactUrgence.nom + " " + contactUrgence.prenom
+                {contactUrgence && contactUrgence.contact_nomPrenom
+                  ? contactUrgence.contact_nomPrenom
                   : ""}
               </td>
             </tr>
             <tr>
               <th scope="row">Lien de parenté</th>
               <td>
-                {contactUrgence && contactUrgence.lienParente
-                  ? contactUrgence.lienParente
+                {contactUrgence && contactUrgence.contact_lienParente
+                  ? contactUrgence.contact_lienParente
                   : ""}
               </td>
             </tr>
             <tr>
               <th scope="row">Telephone</th>
               <td>
-                {contactUrgence && contactUrgence.telephone
-                  ? contactUrgence.telephone
+                {contactUrgence && contactUrgence.contact_telephone
+                  ? contactUrgence.contact_telephone
                   : ""}
               </td>
             </tr>

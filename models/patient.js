@@ -7,12 +7,11 @@ const patientSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Fiche"
   },
-  nom: { type: String, required: true, minlength: 3, maxlength: 255 },
-  prenom: { type: String, required: true, minlength: 3, maxlength: 255 },
+  nomPrenom: { type: String, required: true, minlength: 3, maxlength: 255 },
   age: String,
   telephone: { type: String, minlength: 8, maxlength: 8 },
   firstVisit: { type: Date, default: Date.now() },
-  lastVisit: { type: Date, default: undefined },
+  lastVisit: { type: Date, default: "" },
   nbrVisit: { type: Number, min: 0 },
   adresse: { type: String, maxlength: 1024 },
   assuranceMedicale: String
@@ -21,16 +20,14 @@ const patientSchema = new mongoose.Schema({
 const Patient = mongoose.model("Patient", patientSchema);
 
 Patient.createPatient = async function(
-  nom,
-  prenom,
+  nomPrenom,
   age,
   telephone,
   adresse,
   assuranceMedicale
 ) {
   const patient = new Patient({
-    nom,
-    prenom,
+    nomPrenom,
     age,
     telephone,
     adresse,
@@ -43,8 +40,7 @@ Patient.createPatient = async function(
 
 Patient.modifyPatient = async function(
   id,
-  nom,
-  prenom,
+  nomPrenom,
   age,
   telephone,
   adresse,
@@ -52,8 +48,7 @@ Patient.modifyPatient = async function(
 ) {
   let patient = await Patient.findById(id);
 
-  patient.nom = nom;
-  patient.prenom = prenom;
+  patient.nomPrenom = nomPrenom;
   patient.age = age;
   patient.telephone = telephone;
   patient.adresse = adresse;
@@ -75,11 +70,7 @@ Patient.getPatients = async function() {
 
 Patient.validatePatient = function(Patient) {
   const Schema = {
-    nom: Joi.string()
-      .min(3)
-      .max(255)
-      .required(),
-    prenom: Joi.string()
+    nomPrenom: Joi.string()
       .min(3)
       .max(255)
       .required(),

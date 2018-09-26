@@ -17,16 +17,14 @@ router.post("/", async (req, res) => {
   const chroniques = req.body.chroniques;
   const allegriesMedicaments = req.body.allegriesMedicaments;
   const medicinsAnterieurs = req.body.medicinsAnterieurs;
-  const contact_nom = req.body.contact_nom;
-  const contact_prenom = req.body.contact_prenom;
+  const contact_lienParente = req.body.contact_lienParente;
+  const contact_nomPrenom = req.body.contact_nomPrenom;
   const contact_telephone = req.body.contact_telephone;
-  const contact_lien = req.body.contact_lien;
 
   const contactUrgence = {
-    nom: contact_nom || "",
-    prenom: contact_prenom || "",
-    telephone: contact_telephone || "",
-    lienParente: contact_lien || ""
+    contact_lienParente,
+    contact_nomPrenom,
+    contact_telephone
   };
 
   const fiche = await Fiche.createFiche(patient, {

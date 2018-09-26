@@ -3,8 +3,8 @@ import React, { Component } from "react";
 function PatientItem(props) {
   return (
     <tr onClick={props.onClick}>
-      <td>{props.patient.nom}</td>
-      <td>{props.patient.prenom}</td>
+      <td>{props.patient.nomPrenom}</td>
+      <td>{props.patient.nomPrenom}</td>
       <td>{props.patient.age}</td>
       <td>{props.patient.telephone}</td>
     </tr>

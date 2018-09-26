@@ -11,8 +11,8 @@ const ficheSchema = new mongoose.Schema({
   consultations: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Consultation",
-      required: true
+      ref: "Consultation"
+      //required: true
     }
   ],
   allegries: { type: String, default: "" },
