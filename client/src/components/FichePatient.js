@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/FichePatient.css";
-function FichePatient(props) {
+import { withRouter } from "react-router-dom";
+const FichePatient = withRouter(props => {
   const patient = props.patients.filter(
     el => el._id == props.match.params.id
   )[0];
@@ -13,6 +14,10 @@ function FichePatient(props) {
     <div className="container">
       <div className="container-fiche">
         <h2 className="text-center">
+          <h1>modifier fiche</h1>
+          <h1 onClick={() => props.modifierFiche(props.history, patient._id)}>
+            modifier fiche
+          </h1>
           <strong>Fiche Patient :</strong>
           <span className="text-uppercase">{patient.nomPrenom}</span>
         </h2>
@@ -95,6 +100,6 @@ function FichePatient(props) {
       </div>
     </div>
   );
-}
+});
 
 export default FichePatient;

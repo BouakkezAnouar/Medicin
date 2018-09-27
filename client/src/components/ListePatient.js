@@ -1,15 +1,14 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-function PatientItem(props) {
-  return (
-    <tr onClick={props.onClick}>
-      <td>{props.patient.nomPrenom}</td>
-      <td>{props.patient.nomPrenom}</td>
-      <td>{props.patient.age}</td>
-      <td>{props.patient.telephone}</td>
-    </tr>
-  );
-}
+const PatientItem = withRouter(props => (
+  <tr onClick={() => props.history.push(`/fiche/${props.id}`)}>
+    <td>{props.patient.nomPrenom}</td>
+    <td>{props.patient.nomPrenom}</td>
+    <td>{props.patient.age}</td>
+    <td>{props.patient.telephone}</td>
+  </tr>
+));
 class ListePatient extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +26,7 @@ class ListePatient extends Component {
       <div className="container">
         <div className="container">
           <button className="btn btn-secondary">
-            <h1 onClick={this.props.createFiche}>+</h1>
+            <ToCreateFiche />
           </button>
           <div className="col-md-3 col-md-4">
             <div className="form-group">
@@ -55,10 +54,7 @@ class ListePatient extends Component {
             </thead>
             <tbody>
               {this.props.patients.map((el, i) => (
-                <PatientItem
-                  patient={el}
-                  onClick={() => this.props.showFiche(el._id)}
-                />
+                <PatientItem patient={el} id={el._id} />
               ))}
             </tbody>
           </table>
@@ -67,5 +63,9 @@ class ListePatient extends Component {
     );
   }
 }
+
+const ToCreateFiche = withRouter(props => (
+  <h1 onClick={() => props.history.push("/createFiche")}>+</h1>
+));
 
 export default ListePatient;

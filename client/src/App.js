@@ -7,9 +7,10 @@ import Footer from "./components/Footer";
 import Consultation from "./components/Consultations";
 import AddConsultation from "./components/AddConsultation";
 import ListePatient from "./components/ListePatient";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import "./css/App.css";
+import ModifierFiche from "./components/ModifierFiche";
 const NoMatch = () => {
   return <h1>404 not found</h1>;
 };
@@ -52,6 +53,7 @@ class App extends Component {
         filter: ""
       };
       this.CreateFichePatient = this.CreateFichePatient.bind(this);
+      this.updateFiche = this.updateFiche.bind(this);
     }
   }
   handleChange(e) {
@@ -72,13 +74,6 @@ class App extends Component {
     return this.state.patients.filter(patient =>
       patient.nomPrenom.toLowerCase().includes(this.state.filter.toLowerCase())
     );
-  };
-
-  showFiche = idFiche => {
-    document.location.href = `http://localhost:3000/fiche/${idFiche}`;
-  };
-  createFiche = () => {
-    document.location.href = `http://localhost:3000/CreateFiche`;
   };
 
   async CreateFichePatient() {
@@ -124,6 +119,49 @@ class App extends Component {
 
     console.log(patient);
   }
+
+  modifierFiche = (history, idPatient) => {
+    const patient = this.state.patients.filter(el => el._id === idPatient)[0];
+    let fiche, contactUrgence;
+    if (patient && patient.fiche) fiche = patient.fiche;
+    if (fiche && fiche.contactUrgence) contactUrgence = fiche.contactUrgence;
+    console.log(patient);
+    const Newfiche = {
+      allegries: fiche.allegries,
+      medicinsAnterieurs: fiche.medicinsAnterieurs,
+      chroniques: fiche.chroniques,
+      allegriesMedicaments: fiche.allegriesMedicaments,
+      contact_nomPrenom: contactUrgence.contact_nomPrenom,
+      contact_lienParente: contactUrgence.contact_lienParente,
+      contact_telephone: contactUrgence.contact_telephone,
+      nomPrenom: patient.nomPrenom,
+      telephone: patient.telephone,
+      age: patient.age,
+      assuranceMedicale: patient.assuranceMedicale,
+      adresse: patient.adresse
+    };
+    this.setState({ fiche: Newfiche }, () => {
+      history.push("/modifierFiche/" + patient._id);
+    });
+  };
+
+  async updateFiche(history, idPatient) {
+    const allegries = this.state.fiche.allegries;
+    const medicinsAnterieurs = this.state.fiche.medicinsAnterieurs;
+    const chroniques = this.state.fiche.chroniques;
+    const allegriesMedicaments = this.state.fiche.allegriesMedicaments;
+    const contact_nomPrenom = this.state.fiche.contact_nomPrenom;
+    const contact_lienParente = this.state.fiche.contact_lienParente;
+    const contact_telephone = this.state.fiche.contact_telephone;
+    const nomPrenom = this.state.fiche.nomPrenom;
+    const telephone = this.state.fiche.telephone;
+    const age = this.state.fiche.age;
+    const assuranceMedicale = this.state.fiche.assuranceMedicale;
+    const adresse = this.state.fiche.adresse;
+
+    axios.put("http://localhost:7000/patient");
+  }
+
   componentDidMount() {
     axios
       .get("http://localhost:7000/patient")
@@ -144,7 +182,6 @@ class App extends Component {
                 patients={this.getFiltredPatients()}
                 onChange={this.handleChangeSearch.bind(this)}
                 showFiche={this.showFiche}
-                createFiche={this.createFiche}
               />
             )}
           />
@@ -161,7 +198,13 @@ class App extends Component {
           <Route
             path="/fiche/:id"
             render={props => {
-              return <FichePatient {...props} patients={this.state.patients} />;
+              return (
+                <FichePatient
+                  {...props}
+                  patients={this.state.patients}
+                  modifierFiche={this.modifierFiche}
+                />
+              );
             }}
           />
           <Route
@@ -173,6 +216,20 @@ class App extends Component {
                   onChange={this.handleChange.bind(this)}
                   onClick={this.handleClick.bind(this)}
                   CreateFichePatient={this.CreateFichePatient}
+                  fiche={this.state.fiche}
+                />
+              );
+            }}
+          />
+
+          <Route
+            path="/modifierFiche/:id"
+            render={props => {
+              return (
+                <ModifierFiche
+                  {...props}
+                  updateFiche={this.updateFiche}
+                  fiche={this.state.fiche}
                 />
               );
             }}
@@ -196,4 +253,7 @@ class App extends Component {
   }
 }
 
+const ToCreateFiche = withRouter(({ history }) => (
+  <h1 onClick={history.push("/createFiche")}>+</h1>
+));
 export default App;

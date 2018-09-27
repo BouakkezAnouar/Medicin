@@ -1,6 +1,8 @@
 import React from "react";
-function CreateFichePatient(props) {
+import { withRouter } from "react-router-dom";
+const ModifierFiche = withRouter(props => {
   const fiche = props.fiche;
+  const idPatient = props.match.params.id;
   return (
     <div>
       <div className="container">
@@ -17,6 +19,7 @@ function CreateFichePatient(props) {
                 placeholder="Nom & Prénom de patient"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.nomPrenom}
               />
             </div>
             <div className="form-group">
@@ -26,6 +29,7 @@ function CreateFichePatient(props) {
                 placeholder="Age"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.age}
               />
             </div>
             <div className="form-group">
@@ -35,6 +39,7 @@ function CreateFichePatient(props) {
                 placeholder="Numéro assurance médicale"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.assuranceMedicale}
               />
             </div>
             <div className="form-group">
@@ -44,6 +49,7 @@ function CreateFichePatient(props) {
                 placeholder="Adresse"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.adresse}
               />
             </div>
             <div className="form-group">
@@ -53,6 +59,7 @@ function CreateFichePatient(props) {
                 placeholder="Telephone"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.telephone}
               />
             </div>
             <label>Contact d'urgence :</label>
@@ -63,6 +70,7 @@ function CreateFichePatient(props) {
                 placeholder="Nom & Prénom de contact"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.contact_nomPrenom}
               />
             </div>
             <div className="form-group">
@@ -71,6 +79,7 @@ function CreateFichePatient(props) {
                 id="inputState"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.contact_lienParente}
               >
                 <option selected>Lien de parenté ...</option>
                 <option>père</option>
@@ -92,6 +101,7 @@ function CreateFichePatient(props) {
                 placeholder="Telephone"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.contact_telephone}
               />
             </div>
             <label>Histoire médicale :</label>
@@ -101,6 +111,7 @@ function CreateFichePatient(props) {
                 placeholder="Allergies"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.allegries}
               />
             </div>
             <div className="form-group">
@@ -109,6 +120,7 @@ function CreateFichePatient(props) {
                 placeholder="Maladies chroniques"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.chroniques}
               />
             </div>
             <div className="form-group">
@@ -117,6 +129,7 @@ function CreateFichePatient(props) {
                 placeholder="Allergies aux médicaments"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.allegriesMedicaments}
               />
             </div>
             <div className="form-group">
@@ -126,6 +139,7 @@ function CreateFichePatient(props) {
                 placeholder="medecins anterieurs"
                 className="form-control"
                 onChange={props.onChange}
+                value={fiche.medicinsAnterieurs}
               />
             </div>
 
@@ -133,9 +147,9 @@ function CreateFichePatient(props) {
               <button
                 className="btn btn-primary btn-block"
                 type="submit"
-                onClick={props.CreateFichePatient}
+                onClick={() => props.updateFiche(props.history, idPatient)}
               >
-                Ajouter le patient
+                modifier le patient
               </button>
             </div>
           </div>
@@ -143,6 +157,5 @@ function CreateFichePatient(props) {
       </div>
     </div>
   );
-}
-
-export default CreateFichePatient;
+});
+export default ModifierFiche;
