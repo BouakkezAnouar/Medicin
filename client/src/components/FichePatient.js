@@ -14,10 +14,20 @@ const FichePatient = withRouter(props => {
     <div className="container">
       <div className="container-fiche">
         <h2 className="text-center">
-          <h1>modifier fiche</h1>
-          <h1 onClick={() => props.modifierFiche(props.history, patient._id)}>
-            modifier fiche
-          </h1>
+          <p>
+            <button
+              className="btn btn-secondary"
+              onClick={() => props.modifierFiche(props.history, patient._id)}
+            >
+              modifier fiche
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => props.history.push(`/consultations/${fiche._id}`)}
+            >
+              consultations
+            </button>
+          </p>
           <strong>Fiche Patient :</strong>
           <span className="text-uppercase">{patient.nomPrenom}</span>
         </h2>

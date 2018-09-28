@@ -42,6 +42,27 @@ router.post("/", async (req, res) => {
   res.status(200).send(patientF);
 });
 
-router.put("/", async (req, res) => {});
+router.put("/", async (req, res) => {
+  const id = req.body.id;
+  let fiche = await Fiche.findById(id);
+  if (!fiche) return res.status(401).send("fihce not found!");
+
+  fiche.allegries = req.body.allegries || "";
+  fiche.chroniques = req.body.chroniques || "";
+  fiche.allegriesMedicaments = req.body.allegriesMedicaments || "";
+  fiche.medicinsAnterieurs = req.body.medicinsAnterieurs || "";
+  const contact_lienParente = req.body.contact_lienParente || "";
+  const contact_nomPrenom = req.body.contact_nomPrenom || "";
+  const contact_telephone = req.body.contact_telephone || "";
+
+  fiche.contactUrgence = {
+    contact_nomPrenom,
+    contact_telephone,
+    contact_lienParente
+  };
+
+  fiche = await fiche.save();
+  res.status(200).send(fiche);
+});
 
 module.exports = router;

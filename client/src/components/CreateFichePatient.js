@@ -1,5 +1,6 @@
 import React from "react";
-function CreateFichePatient(props) {
+import { withRouter } from "react-router-dom";
+const CreateFichePatient = withRouter(props => {
   const fiche = props.fiche;
   return (
     <div>
@@ -133,7 +134,7 @@ function CreateFichePatient(props) {
               <button
                 className="btn btn-primary btn-block"
                 type="submit"
-                onClick={props.CreateFichePatient}
+                onClick={() => props.CreateFichePatient(props.history)}
               >
                 Ajouter le patient
               </button>
@@ -143,6 +144,6 @@ function CreateFichePatient(props) {
       </div>
     </div>
   );
-}
+});
 
 export default CreateFichePatient;

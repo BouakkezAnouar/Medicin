@@ -4,7 +4,7 @@ import SearchBar from "./components/SearchBar";
 import CreateFichePatient from "./components/CreateFichePatient";
 import FichePatient from "./components/FichePatient";
 import Footer from "./components/Footer";
-import Consultation from "./components/Consultations";
+import Consultations from "./components/Consultations";
 import AddConsultation from "./components/AddConsultation";
 import ListePatient from "./components/ListePatient";
 import { Switch, Route, withRouter } from "react-router-dom";
@@ -50,10 +50,17 @@ class App extends Component {
           adresse: ""
         },
         patients: PatientTest,
-        filter: ""
+        fiches: [],
+        filter: "",
+        consultation: {
+          description: "",
+          ordonnance: "",
+          prix: ""
+        }
       };
       this.CreateFichePatient = this.CreateFichePatient.bind(this);
       this.updateFiche = this.updateFiche.bind(this);
+      this.AddConsultation = this.AddConsultation.bind(this);
     }
   }
   handleChange(e) {
@@ -61,6 +68,12 @@ class App extends Component {
     fiche[e.target.name] = e.target.value;
     this.setState({ fiche });
   }
+
+  onChangeConsultation = e => {
+    let consultation = this.state.consultation;
+    consultation[e.target.name] = e.target.value;
+    this.setState({ consultation });
+  };
 
   handleClick() {
     console.log("envoyer ceci vers bd");
@@ -76,7 +89,7 @@ class App extends Component {
     );
   };
 
-  async CreateFichePatient() {
+  async CreateFichePatient(history) {
     const nomPrenom = this.state.fiche.nomPrenom;
     const age = this.state.fiche.age;
     const telephone = this.state.fiche.telephone;
@@ -115,9 +128,9 @@ class App extends Component {
     let patients = await axios.get("http://localhost:7000/patient");
     patients = patients.data;
 
-    this.setState({ patients });
-
-    console.log(patient);
+    this.setState({ patients }, () => {
+      history.push("/");
+    });
   }
 
   modifierFiche = (history, idPatient) => {
@@ -125,7 +138,6 @@ class App extends Component {
     let fiche, contactUrgence;
     if (patient && patient.fiche) fiche = patient.fiche;
     if (fiche && fiche.contactUrgence) contactUrgence = fiche.contactUrgence;
-    console.log(patient);
     const Newfiche = {
       allegries: fiche.allegries,
       medicinsAnterieurs: fiche.medicinsAnterieurs,
@@ -159,13 +171,66 @@ class App extends Component {
     const assuranceMedicale = this.state.fiche.assuranceMedicale;
     const adresse = this.state.fiche.adresse;
 
-    axios.put("http://localhost:7000/patient");
+    await axios.put("http://localhost:7000/patient", {
+      id: idPatient,
+      nomPrenom,
+      age,
+      assuranceMedicale,
+      adresse,
+      telephone
+    });
+
+    const idFiche = this.state.patients.filter(el => el._id === idPatient)[0]
+      .fiche._id;
+
+    const fiche = await axios.put("http://localhost:7000/fiche", {
+      id: idFiche,
+      allegries,
+      chroniques,
+      allegriesMedicaments,
+      medicinsAnterieurs,
+      contact_lienParente,
+      contact_nomPrenom,
+      contact_telephone
+    });
+
+    let patients = await axios.get("http://localhost:7000/patient");
+    patients = patients.data;
+    this.setState({ patients });
+
+    console.log(fiche);
+
+    history.push(`/fiche/${idPatient}`);
+
+    // console.log(patient);
+  }
+  async AddConsultation(idFiche) {
+    const consultation = await axios.post(
+      "http://localhost:7000/consultation",
+      {
+        idFiche,
+        description: this.state.consultation.description,
+        ordonnance: this.state.consultation.ordonnance,
+        prix: this.state.consultation.prix
+      }
+    );
+
+    console.log(consultation);
+
+    let fiches = await axios.get("http://localhost:7000/fiche");
+    fiches = fiches.data;
+    this.setState({ fiches });
   }
 
   componentDidMount() {
     axios
       .get("http://localhost:7000/patient")
       .then(res => this.setState({ patients: res.data }))
+      .catch(err => console.log(err.message));
+
+    axios
+      .get("http://localhost:7000/fiche")
+      .then(res => this.setState({ fiches: res.data }))
       .catch(err => console.log(err.message));
   }
 
@@ -230,6 +295,21 @@ class App extends Component {
                   {...props}
                   updateFiche={this.updateFiche}
                   fiche={this.state.fiche}
+                  onChange={this.handleChange.bind(this)}
+                />
+              );
+            }}
+          />
+
+          <Route
+            path="/consultations/:id"
+            render={props => {
+              return (
+                <Consultations
+                  {...props}
+                  fiches={this.state.fiches}
+                  AddConsultation={this.AddConsultation}
+                  onChange={this.onChangeConsultation}
                 />
               );
             }}
