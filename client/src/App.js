@@ -11,6 +11,8 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import "./css/App.css";
 import ModifierFiche from "./components/ModifierFiche";
+import Acceill from "./components/Acceill";
+import Articles from "./components/Articles";
 const NoMatch = () => {
   return <h1>404 not found</h1>;
 };
@@ -215,8 +217,6 @@ class App extends Component {
       }
     );
 
-    console.log(consultation);
-
     let fiches = await axios.get("http://localhost:7000/fiche");
     fiches = fiches.data;
     this.setState({ fiches });
@@ -312,6 +312,18 @@ class App extends Component {
                   onChange={this.onChangeConsultation}
                 />
               );
+            }}
+          />
+          <Route
+            path="/Acceill"
+            render={props => {
+              return <Acceill />;
+            }}
+          />
+          <Route
+            path="/Conseils"
+            render={props => {
+              return <Articles />;
             }}
           />
 

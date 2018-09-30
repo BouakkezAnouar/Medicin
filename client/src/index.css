@@ -69,3 +69,39 @@ border-top: 10px #acc6cc solid;
 .footer-dark ul a:hover {
   opacity: 0.8;
 }
+
+.Article-item{
+  background-color: #efefef;
+  border :2px #8bb8dc solid;
+}
+.article-list h2 h1 p{
+color: rgb(42, 99, 99);
+}
+.img-fluid{
+  border-bottom :10px #cd3333 solid;
+}
+
+.home-banner{
+  font-size : 15px;
+  line-height : 21px;
+  color : #396E77;
+  padding-bottom: 20vh;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+   -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+       animation: fadein 2s;
+}
+
+.home-banner:hover{
+  -webkit-transform: scale(1.05); /* Safari, Chrome and Opera > 12.1 */
+  -moz-transform: scale(1.05); /* Firefox < 16 */
+   -ms-transform: scale(1.05); /* Internet Explorer */
+    -o-transform: scale(1.05); /* Opera < 12.1 */
+       transform: scale(1.05);
+}
+
+@keyframes fadein {
+  from { transform: translate(0,0); }
+  to { transform: translate(5em,0);}
+}
